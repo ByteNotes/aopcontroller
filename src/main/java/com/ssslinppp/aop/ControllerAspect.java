@@ -32,9 +32,10 @@ public class ControllerAspect {
 
         ResultEntity<?> resultEntity;
         try {
+            logger.info("执行Controller开始: " + pjp.getSignature() + " 参数：" + Lists.newArrayList(pjp.getArgs()).toString());
             resultEntity = (ResultEntity<?>) pjp.proceed(pjp.getArgs());
-            logger.info("执行 " + pjp.getSignature() + " 参数：" + Lists.newArrayList(pjp.getArgs()).toString()
-                    + " , 耗时：" + stopwatch.stop().elapsed(TimeUnit.MILLISECONDS) + "(毫秒).");
+            logger.info("执行Controller结束: " + pjp.getSignature() + "， 返回值：" + resultEntity.toString());
+            logger.info("耗时：" + stopwatch.stop().elapsed(TimeUnit.MILLISECONDS) + "(毫秒).");
         } catch (Throwable throwable) {
             resultEntity = handlerException(pjp, throwable);
         }
